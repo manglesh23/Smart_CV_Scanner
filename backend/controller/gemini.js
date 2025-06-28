@@ -5,6 +5,7 @@ import path from "path";
 import { Readable } from "stream";
 import dotenv from "dotenv";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import job_discription from "../job_Discription/jobdiscription.js";
 
 dotenv.config();
 
@@ -22,28 +23,18 @@ const bufferStream = (buffer) => {
 export const geminibot = async (req, res) => {
   try {
     console.log("bot called");
-    // console.log("file:-",req.file.buffer);
-
-    // let pdfStream = bufferStream(req.file.buffer);
-    // const stream = new Readable();
-    // stream.push(req.file.buffer);
-    // stream.push(null);
-
-    // const loader = new PDFLoader(pdfStream);
-    // const doc = await loader.load();
-    // console.log("CV:-", doc);
-
-    const blob = new Blob([req.file.buffer], { type: req.file.mimetype });  //Install PDF-parse, langchain@latest, use PDFLoader from langchain
+    //Blob is Supported by langchain@latest
+    const blob = new Blob([req.file.buffer], { type: req.file.mimetype }); //Install PDF-parse, langchain@latest, use PDFLoader from langchain
 
     // Load PDF using Blob
-    const loader = new PDFLoader(blob);
-    const docs = await loader.load();
-    // console.log(docs);
+    const cvloader = new PDFLoader(blob);
+    const docs = await cvloader.load();
+    // console.log("docs:-",docs[0].pageContent);
 
     let genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     let model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    let prompt = "Tell me anything?";
+    let prompt = `Compare this Job Description and Resume. Job Description: ${job_discription} Resume: ${docs[0].pageContent} Rate the match out of 100. Then explain why. `;
 
     let response = await model.generateContent(prompt);
     let result = await response.response;
