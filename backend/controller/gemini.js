@@ -12,11 +12,12 @@ dotenv.config();
 export const geminibot = async (req, res) => {
   try {
     console.log("bot called");
+
     //Blob is Supported by langchain@latest
     const blob = new Blob([req.file.buffer], { type: req.file.mimetype }); //Install PDF-parse, langchain@latest, use PDFLoader from langchain
 
     // Load PDF using Blob
-    const cvloader = new PDFLoader(blob);
+    const cvloader = new PDFLoader(blob); //PDFLoaded From Langchain
     const docs = await cvloader.load();
     // console.log("docs:-",docs[0].pageContent);
 
