@@ -9,17 +9,6 @@ import job_discription from "../job_Discription/jobdiscription.js";
 
 dotenv.config();
 
-const bufferStream = (buffer) => {
-  try {
-    let stream = new Readable();
-    stream.push(buffer);
-    stream.push(null);
-    return stream;
-  } catch (e) {
-    return e;
-  }
-};
-
 export const geminibot = async (req, res) => {
   try {
     console.log("bot called");
