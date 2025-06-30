@@ -8,6 +8,7 @@ This project has an API thourgh that CV can be uploaded in to the system and bas
 
 1. API To upload CV.
 2. Output with Match Score and Explanation.
+3. This project has two API. In first API, Gemini is integrated without langchain, 2nd API use      langchain that explain CV strength in Positive points as well as Negative points.
 
 ---
 

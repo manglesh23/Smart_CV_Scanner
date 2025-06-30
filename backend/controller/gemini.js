@@ -25,8 +25,9 @@ export const geminibot = async (req, res) => {
     let model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     let prompt = `Compare this Job Description and Resume. Job Description: ${job_discription} Resume: ${docs[0].pageContent} Rate the match out of 100. Then explain why. `;
-
-    let response = await model.generateContent(prompt);
+    
+    let prompt1="Can you review Code?"
+    let response = await model.generateContent(prompt1);
     let result = await response.response;
 
     res.status(200).json({ reply: result.text() });
