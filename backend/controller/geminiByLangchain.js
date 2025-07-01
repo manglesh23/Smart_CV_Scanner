@@ -24,8 +24,10 @@ export const geminiByLangchain = async (req, res) => {
     let candidateCV = document.map((doc) => doc.pageContent).join("\n");
 
     // console.log(2);
+    //PromTemplat got fromTemplate
+    
     const prompt =
-      PromptTemplate.fromTemplate(`Compare this Job Description and Resume.
+      PromptTemplate.fromTemplate(`Compare this Job Description and Resume. 
         Job Description: {job}
         Resume:
         {summary}
