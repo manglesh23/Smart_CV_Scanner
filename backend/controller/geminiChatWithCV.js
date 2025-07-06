@@ -13,7 +13,7 @@ dotenv.config();
 
 export const geminiChatWithCV = async (req, res) => {
   try {
-    console.log(1);
+    // console.log(1);
 
     const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
 
@@ -27,7 +27,7 @@ export const geminiChatWithCV = async (req, res) => {
       returnMessages: true,
       memoryKey: "messages",
     });
-    console.log(2);
+    // console.log(2);
     let model = new ChatGoogleGenerativeAI({
       model: "models/gemini-1.5-flash",
       apiKey: process.env.GEMINI_API_KEY,
@@ -37,8 +37,8 @@ export const geminiChatWithCV = async (req, res) => {
     let systemPrompt = `You are SmartHireBot. You answer HR-related questions based on resume data.
   Resume:
   {cvData}
-  Answer as accurately as possible. If data is missing, say "Not available".`;
-    console.log(3);
+  Answer as accurately as possible and rate the match out of 100. If data is missing, say "Not available".`;
+    // console.log(3);
 
     //ChatPromptTemplate got fromMessages
     //PromTemplat got fromTemplate
@@ -49,7 +49,7 @@ export const geminiChatWithCV = async (req, res) => {
       ["human", "{input}"],
     ]);
 
-    console.log(3.1);
+    // console.log(3.1);
     let chain = RunnableSequence.from([
       async (input) => {
         const pastMessages = await memory.loadMemoryVariables({});
@@ -63,7 +63,7 @@ export const geminiChatWithCV = async (req, res) => {
       model,
     ]);
 
-    console.log(4);
+    // console.log(4);
     try {
       let result = await chain.invoke({
         input: "What's candidate experience with node.js",
@@ -85,7 +85,7 @@ export const geminiChatWithCV = async (req, res) => {
       console.error(e);
       res.status(500).json({ error: e, msg: "Invoke chain" });
     }
-    console.log(5);
+    // console.log(5);
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: e });
