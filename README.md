@@ -1,7 +1,4 @@
-Smart CV Scanner
-
-This project has an API thourgh that CV can be uploaded in to the system and based on the Job_Discription alredy in the document folder it generate match score with key skills explanation and gap between JD and CV.
-
+Smart CV Scanner – Built a backend system that parses and analyzes CVs using NLP and AI. Features include secure file upload (PDF/DOCX), named entity recognition (NER), job-CV matching using semantic similarity (LangChain + Gemini), and a REST API with JWT authentication and RBAC. Integrated resume scoring, dashboard analytics, and export options. Stack: Node.js, Express, MongoDB, AWS S3, LangChain, spaCy, PDF-lib, JWT.
 ---
 
 ## 🚀 Features

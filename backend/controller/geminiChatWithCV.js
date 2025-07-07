@@ -37,7 +37,20 @@ export const geminiChatWithCV = async (req, res) => {
     let systemPrompt = `You are SmartHireBot. You answer HR-related questions based on resume data.
   Resume:
   {cvData}
-  Answer as accurately as possible and rate the match out of 100. If data is missing, say "Not available".`;
+  Answer as accurately as possible and rate the match out of 100. If data is missing, say "Not available".
+  
+  Instruction:
+  Output Should be Like in this format:-
+  Candidate Information:
+  Name:"",
+  Company:"",
+  position:"",
+  Education:""
+  
+  Score:"",
+  Matching Skills:"",
+  Unmatched Area:"",
+  Summary:""`;
     // console.log(3);
 
     //ChatPromptTemplate got fromMessages
