@@ -34,24 +34,41 @@ export const geminiChatWithCV = async (req, res) => {
       temperature: 0.3,
     });
 
-    let systemPrompt = `You are SmartHireBot. You answer HR-related questions based on resume data.
-  Resume:
-  {cvData}
-  Answer as accurately as possible and rate the match out of 100. If data is missing, say "Not available".
-  
-  Instruction:
-  Output Should be Like in this format:-
-  Candidate Information:
-  Name:"",
-  Company:"",
-  position:"",
-  Education:""
-  
-  Score:"",
-  Matching Skills:"",
-  Unmatched Area:"",
-  Summary:""`;
-    // console.log(3);
+    let systemPrompt = `
+You are SmartHireBot. You answer HR-related questions based on resume data.
+Resume:
+{cvData}
+Answer as accurately as possible and rate the match out of 100. If data is missing, say "Not available".
+
+Instruction:
+Extract the following fields from the resume and return only valid JSON:
+
+- name
+- current company (array if more than one)
+- position
+- education
+- matched_skills
+- missing_skills
+- score (out of 100)
+- summary (2-3 lines)
+
+Format:
+{{
+  "candidate_information": {{
+    "name": "",
+    "current_company": [],
+    "position": "",
+    "education": "",
+    "Skills":""
+  }},
+  "analysis": {{
+    "matched_skills": [],
+    "missing_skills": [],
+    "score": 0
+  }},
+  "summary": ""
+}}
+`;
 
     //ChatPromptTemplate got fromMessages
     //PromTemplat got fromTemplate
@@ -88,7 +105,12 @@ export const geminiChatWithCV = async (req, res) => {
         //     },
         //   ],
       });
-      res.status(200).json({ msg: result.content });
+
+      let analysis = result.content;
+      const jsonOnly = analysis.replace(/```json|```/g, "").trim();
+      analysis = JSON.parse(jsonOnly);
+
+      res.status(200).json({ Result: analysis });
 
       await memory.saveContext(
         { input: "What's candidate experience with Node.js" },
@@ -96,7 +118,7 @@ export const geminiChatWithCV = async (req, res) => {
       );
     } catch (e) {
       console.error(e);
-      res.status(500).json({ error: e, msg: "Invoke chain" });
+      res.status(500).json({ error: e, Analysis: "Invoke chain" });
     }
     // console.log(5);
   } catch (e) {
