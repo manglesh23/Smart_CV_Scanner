@@ -96,7 +96,7 @@ Format:
     // console.log(4);
     try {
       let result = await chain.invoke({
-        input: "What's candidate experience with node.js",
+        input: "What's Candidate Experience with Ruby on Rails",
         //   message: [
         //     { role: "human", content: "Give me a brief summary" },
         //     {
