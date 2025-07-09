@@ -4,15 +4,15 @@ import { RunnableSequence } from "@langchain/core/runnables";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 // import job_discription from "../job_Discription/jobdiscription.js";
 // import fs from 'fs'
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 dotenv.config();
 
 /*-----------------This API Compare CV with Jobdescription Uploaded By Recruiter------------------*/
-/*                Fetch Candidate Details, Match Score, Matching Skills and Unmatched Skills      */ 
-/*------------------------------------------------------------------------------------------------*/  
+/*                Fetch Candidate Details, Match Score, Matching Skills and Unmatched Skills      */
+/*------------------------------------------------------------------------------------------------*/
 
 export const geminiByLangchain = async (req, res) => {
   try {
@@ -31,11 +31,14 @@ export const geminiByLangchain = async (req, res) => {
 
     let candidateCV = document.map((doc) => doc.pageContent).join("\n");
 
-    let __fileName= fileURLToPath(import.meta.url);
-    let __dirname= path.dirname(__fileName);
+    let __fileName = fileURLToPath(import.meta.url);
+    let __dirname = path.dirname(__fileName);
 
-    let jdFilePath= path.join(__dirname,"../job_Discription/jobDescription.txt")
-    let get_Job_DesCription= await readFile(jdFilePath,"utf-8");   //Fetching JobDescription From .txt file, uploaded by user through uploadJD API
+    let jdFilePath = path.join(
+      __dirname,
+      "../job_Discription/jobDescription.txt"
+    );
+    let get_Job_DesCription = await readFile(jdFilePath, "utf-8"); //Fetching JobDescription From .txt file, uploaded by User through uploadJD API
     // console.log("Job Description:-",get_Job_DesCription)
 
     //PromTemplat got fromTemplate

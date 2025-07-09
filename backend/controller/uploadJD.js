@@ -1,6 +1,6 @@
 // import e from "express";
 import job_discription from "../job_Discription/jobdiscription.js";
-import fs from "fs";
+import fs, { writeFile } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -15,6 +15,7 @@ export const uploadJD = async (req, res) => {
       __dirname,
       "../job_Discription/jobDescription.txt"
     );
+    // let writefile = await writeFile()
     fs.writeFile(JD_FilePath, get_Job_DesCription, "utf-8", (err, data) => {
       if (err) {
          res.status(404).json({ msg: "Encounter Error" });
