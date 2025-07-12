@@ -5,7 +5,7 @@ export const uploadMultpleFile= async(req,res)=>{
     //   console.log(req.files);
       let length= req.files.length;
 
-      console.log("Length:---",length);
+      // console.log("Length:---",length);
       let getFile=[];
       for(let v of req.files){
         // console.log(v.buffer)

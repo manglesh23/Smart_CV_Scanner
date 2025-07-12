@@ -12,7 +12,7 @@ dotenv.config();
 
 export const compareJDwithCVs = async (files) => {
   try {
-    console.log("Files:-",files)
+    // console.log("Files:-",files)
     let chatModel = new ChatGoogleGenerativeAI({
       model: "models/gemini-1.5-flash",
       apiKey: process.env.GEMINI_API_KEY,
@@ -66,24 +66,24 @@ export const compareJDwithCVs = async (files) => {
      "summary": ""
     }}`);
     
-    console.log("3")
+    // console.log("3")
     let chain = RunnableSequence.from([
       (input) => ({ job: input.jobDescription, summary: input.candidateCV }),
       prompt,
       chatModel,
     ]);
     
-    console.log("5")
+    // console.log("5")
     let result = await chain.invoke({
       jobDescription: job_Discription,
       candidateCV: candidateCV,
     });
     let analysis = result.content;
-    console.log("6")
+    // console.log("6")
     // console.log(analysis)
     let jsonFormat = analysis.replace(/```json|```/g, "").trim();
     analysis = JSON.parse(jsonFormat);
-    console.log("ANAlysis:-",analysis)
+    // console.log("ANAlysis:-",analysis)
     return analysis;
   } catch (e) {
     return e;
