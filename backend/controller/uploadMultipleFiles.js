@@ -1,3 +1,5 @@
+import { compareJDwithCVs } from "../helper/compareJDWithCVs.js";
+
 export const uploadMultpleFile= async(req,res)=>{
     try{
     //   console.log(req.files);
@@ -10,7 +12,16 @@ export const uploadMultpleFile= async(req,res)=>{
         getFile.push(v.originalname)
       }
 
-      res.status(200).json({Files:getFile});
+      const result = await Promise.all(
+        req.files.map(async(file)=>{
+            let getData= await compareJDwithCVs(file);
+
+            return getData;
+        })
+      )
+    //   console.log(result)
+
+      res.status(200).json({Files:result});
     }catch(e){
         res.status(500).json({Error:e});
     }

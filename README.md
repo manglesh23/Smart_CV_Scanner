@@ -7,6 +7,7 @@ Smart CV Scanner – Built a backend system that parses and analyzes CVs using N
 2. Output with Detail  Explanation, Candidate Details, Skills, Matching Skills and Unmatched Skills, Score.
 3. This project has two API. In first API, Gemini is integrated without langchain, 2nd API use      langchain that explain CV strength in Positive points as well as Negative points.
 4. Third API, to chat on CV, it use buffer memory, not a sustainable way to have chat until stored the in some database of Use ReDiS. 
+5. 4th API to get analysis for multiple CVs at a time. 
 
 ---
 
